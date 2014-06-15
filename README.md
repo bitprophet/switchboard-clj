@@ -1,10 +1,12 @@
-# switchboard
+# Switchboard
 
-FIXME: description
+Switchboard is a browser search backend server, inspired by
+[Cony](https://github.com/svetlyak40wt/cony).
 
 ## Installation
 
-Download from http://example.com/FIXME.
+Download from clojars or something if it's up there, otherwise, get it from
+wherever you're reading this?
 
 ## Usage
 
@@ -24,13 +26,8 @@ FIXME: listing of options this app accepts.
 
 ...
 
-### Any Other Sections
-### That You Think
-### Might be Useful
-
 ## License
 
-Copyright © 2014 FIXME
+Copyright © 2014 Jeff Forcier
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Distributed under the BSD license; please see `LICENSE`.
