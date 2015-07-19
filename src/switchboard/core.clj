@@ -17,6 +17,7 @@
 (ns switchboard.core
   (:require [ring.middleware.keyword-params :refer [wrap-keyword-params]]
             [ring.middleware.params :refer [wrap-params]]
+            [ring.middleware.stacktrace :refer [wrap-stacktrace-web]]
             [ring.util.response :refer [not-found, redirect]]
             [ring.adapter.jetty :refer [run-jetty]]
             [clojure.string :refer [split]]
@@ -46,7 +47,8 @@
 
 (def app (-> handler
            wrap-keyword-params
-           wrap-params))
+           wrap-params
+           wrap-stacktrace-web))
 
 ; REPL dev server
 (defonce server (run-jetty #'app {:port 8080 :join? false}))

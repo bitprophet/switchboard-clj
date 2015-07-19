@@ -5,8 +5,7 @@
   :license {:name "BSD 2-Clause License"
             :url "http://opensource.org/licenses/BSD-2-Clause"}
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [ring/ring-core "1.3.0"]
-                 [ring/ring-jetty-adapter "1.3.0"]
+                 [ring "1.3.0"]
                  [http-kit "2.1.19"]]
 
   ;; Build-time options
