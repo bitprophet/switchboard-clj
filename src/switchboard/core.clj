@@ -16,14 +16,20 @@
   (:gen-class))
 
 
+;; Map of Github projects' shorthand identifiers.
+(def github-projects {"inv" "pyinvoke/invoke"})
+
 ;; Github module, key: `gh`
 ;;
 ;; * Empty invocation (`gh`): go to `github.com`.
 ;; * Shorthand project name found in `github-projects` (e.g. `gh inv`): go to
 ;;   its project page.
 (defn github [rest]
-  (case rest
-    nil "https://github.com"))
+  (cond
+    (contains? github-projects rest) (str
+                                       "https://github.com/"
+                                       (github-projects rest))
+    (nil? rest) "https://github.com"))
 
 
 ;; Dispatch requests to given modules based on first word ("key").
