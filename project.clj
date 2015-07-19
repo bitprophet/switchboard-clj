@@ -28,6 +28,13 @@
     (use 'midje.repl)
     (autotest)
 
+    ;; Easy reinvocation of marginalia inline instead of suffering another 20s
+    ;; 'lein marg' run in a shell.
+    ;; TODO: either run on CLI using drip, or reverse engineer (autotest)?
+    (require '[marginalia.core :refer [run-marginalia]])
+    (def marg #(binding [marginalia.html/*resources* ""]
+                 (marginalia.core/run-marginalia '())))
+
     ;; Spin up a dev jetty server
     (require '[ring.adapter.jetty :refer [run-jetty]])
     (defonce server (run-jetty #'app {:port 8080 :join? false}))
