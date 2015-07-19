@@ -22,4 +22,15 @@
   :plugins [[lein-ring "0.8.7"]
             [lein-midje "3.1.3"]
             [lein-marginalia "0.8.0"]]
-  :ring {:handler switchboard.core/app :port 8000})
+  :ring {:handler switchboard.core/app :port 8000}
+
+  ;; REPL init
+  :repl-options {:init (do
+    ;; Load & autorun test suite
+    (use 'midje.repl)
+    (autotest)
+
+    ;; Spin up a dev jetty server w/ error middleware enabled
+    (require '[ring.adapter.jetty :refer [run-jetty]])
+    (defonce server (run-jetty #'app {:port 8080 :join? false}))
+    (.start server))})
