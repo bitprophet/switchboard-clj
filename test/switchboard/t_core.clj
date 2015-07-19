@@ -1,10 +1,10 @@
 (ns switchboard.t-core
-  (:require [switchboard.core :refer :all]
+  (:require [switchboard.core :as core]
             [midje.sweet :refer :all]
             [ring.mock.request :as mock]))
 
 
-(defn query [x] (app (mock/request :get "" {:query x})))
+(defn query [x] (core/app (mock/request :get "" {:query x})))
 (defn redirect [x] {:body "" :status 302 :headers {"Location" x}})
 
 (defn goog [x] (str "https://google.com/search?q=" x))
