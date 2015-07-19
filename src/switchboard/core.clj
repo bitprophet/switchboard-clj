@@ -43,5 +43,7 @@
 ; App wrapping requests w/ easy access to params via map+keyword
 (def app (-> handler
            wrap-keyword-params
-           wrap-params
-           wrap-stacktrace-web))
+           wrap-params))
+
+; Human-facing app adding stacktrace display to the mix
+(def human-app (-> app wrap-stacktrace-web))

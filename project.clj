@@ -37,5 +37,5 @@
 
     ;; Spin up a dev jetty server
     (require '[ring.adapter.jetty :refer [run-jetty]])
-    (defonce server (run-jetty #'app {:port 8080 :join? false}))
+    (defonce server (run-jetty #'human-app {:port 8080 :join? false}))
     (.start server))})
