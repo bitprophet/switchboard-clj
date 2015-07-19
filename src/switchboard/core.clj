@@ -15,25 +15,32 @@
             [org.httpkit.client :as http])
   (:gen-class))
 
-;; Core "take params, spit back URL for redirect" logic
+
+;; Github module, key: `gh`
+;;
+;; * Bare invocation (`gh`): just go to https://github.com
+(defn github [rest]
+  (case rest
+    nil "https://github.com"))
+
+
+;; Dispatch requests to given modules based on first word ('key').
+;;
+;; When no matching key is found, all text is used as-is in a Google search.
 (defn dispatch [[key rest]]
   (case key
-    ;; 'gh': Github functionality
-    "gh" (case rest
-           ;; With no parameters, simply heads to github homepage
-           nil "https://github.com")
-    ;; Default behavior: just google the input (thus acting like a regular
-    ;; browser search bar that isn't hooked up to us)
+    "gh" (github rest)
     (str "https://google.com/search?q=" key (if rest (str " " rest)))))
 
 
-;; Basic HTTP handler logic
+; Basic HTTP handler logic
 (defn handler [request]
   (let [query (-> request :params :query)]
     (if-not (nil? query)
       (redirect (dispatch (split query #" " 2)))
       (not-found "What are you even doing?"))))
 
+; App wrapping requests w/ easy access to params via map+keyword
 (def app (-> handler
            wrap-keyword-params
            wrap-params
