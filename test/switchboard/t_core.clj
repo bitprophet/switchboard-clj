@@ -9,11 +9,18 @@
 
 
 (facts "about general behavior"
-  (fact "lack of query param displays help info")
-  (fact "empty query param value displays help info")
-  (facts "if no submodule is matched, default is to Google"
-    (query "nope") => (redirect "https://google.com/search?q=nope")
-    (query "nope nohow") => (redirect "https://google.com/search?q=nope nohow")))
+
+       (fact "lack of query param displays help info")
+
+       (fact "present but empty query param value displays help info")
+
+       (fact "if no submodule is matched, default is to Google"
+             (let [goog "https://google.com/search?q="]
+               (query "nope") => (redirect (str goog "nope"))
+               (query "nope nohow") => (redirect (str goog "nope nohow")))))
+
 
 (facts "concerning github"
-  (query "gh") => (redirect "https://github.com"))
+
+       (fact "bare key just hits homepage"
+             (query "gh") => (redirect "https://github.com")))
