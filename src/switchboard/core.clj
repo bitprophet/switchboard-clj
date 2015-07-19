@@ -12,8 +12,7 @@
 ;; as a search term handed to Github's search endpoint. And this is only a
 ;; portion of the Github module's functionality.
 ;;
-;; Read on for details on how to inform Switchboard of your desired
-;; configuration.
+;; Read on for details on Switchboard's built-in behavior & functionality.
 
 (ns switchboard.core
   (:require [ring.middleware.keyword-params :refer [wrap-keyword-params]]
@@ -26,17 +25,24 @@
             [org.httpkit.client :as http])
   (:gen-class))
 
-(defn dispatch [query]
-  (let [[key rest] (split query #" " 2)]
-    (cprint key)
-    (cprint rest)
-    {:body "hi"}))
+;; Core "take params, spit back URL for redirect" logic
+(defn dispatch [[key rest]]
+  (case key
+    ;; 'gh': Github functionality
+    "gh" (case rest
+           ;; With no parameters, simply heads to github homepage
+           nil "https://github.com")
+    ;; Default behavior: just google the input (thus acting like a regular
+    ;; browser search bar that isn't hooked up to us)
+    (str "https://google.com/search?q=" key (if rest (str " " rest)))))
 
+
+;; Basic HTTP handler logic
 (defn handler [request]
-  (println) (println) (cprint request)
-  (if (contains? (:params request) :query)
-    (dispatch (:query (:params request)))
-    (not-found "What are you even doing?")))
+  (let [query (-> request :params :query)]
+    (if-not (nil? query)
+      (redirect (dispatch (split query #" " 2)))
+      (not-found "What are you even doing?"))))
 
 (def app (-> handler
            wrap-keyword-params
