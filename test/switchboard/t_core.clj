@@ -23,4 +23,7 @@
 (facts "concerning github"
 
        (fact "bare key just hits homepage"
-             (query "gh") => (redirect "https://github.com")))
+             (query "gh") => (redirect "https://github.com"))
+
+       (fact "bare project id just hits its landing page"
+             (query "gh inv") => (redirect "https://github.com/pyinvoke/invoke")))

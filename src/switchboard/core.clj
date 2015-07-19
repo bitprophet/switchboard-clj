@@ -18,7 +18,9 @@
 
 ;; Github module, key: `gh`
 ;;
-;; * Bare invocation (`gh`): just go to `github.com`
+;; * Empty invocation (`gh`): go to `github.com`.
+;; * Shorthand project name found in `github-projects` (e.g. `gh inv`): go to
+;;   its project page.
 (defn github [rest]
   (case rest
     nil "https://github.com"))
