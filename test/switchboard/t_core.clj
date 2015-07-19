@@ -10,9 +10,9 @@
 
 (facts "about general behavior"
 
-       (fact "lack of query param displays help info")
+       (future-fact "lack of query param displays help info")
 
-       (fact "present but empty query param value displays help info")
+       (future-fact "present but empty query param value displays help info")
 
        (fact "if no submodule is matched, default is to Google"
              (let [goog "https://google.com/search?q="]
