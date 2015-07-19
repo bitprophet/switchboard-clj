@@ -28,7 +28,7 @@
     (use 'midje.repl)
     (autotest)
 
-    ;; Spin up a dev jetty server w/ error middleware enabled
+    ;; Spin up a dev jetty server
     (require '[ring.adapter.jetty :refer [run-jetty]])
     (defonce server (run-jetty #'app {:port 8080 :join? false}))
     (.start server))})
