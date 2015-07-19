@@ -19,10 +19,8 @@
                                   [marginalia "0.8.0"]]}}
 
   ;; Lein plugins & their config
-  :plugins [[lein-ring "0.8.7"]
-            [lein-midje "3.1.3"]
+  :plugins [[lein-midje "3.1.3"]
             [lein-marginalia "0.8.0"]]
-  :ring {:handler switchboard.core/app :port 8000}
 
   ;; REPL init
   :repl-options {:init (do
