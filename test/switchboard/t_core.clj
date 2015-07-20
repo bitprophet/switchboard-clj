@@ -9,6 +9,7 @@
 
 (defn goog [x] (redirect (str "https://google.com/search?q=" x)))
 (defn gh [x] (redirect (str "https://github.com" x)))
+(defn gh-issue-search [x] (gh (str "/pyinvoke/invoke/search?q=" x "&ref=cmdform&type=Issues")))
 
 
 (facts "general behavior"
@@ -40,5 +41,5 @@
              (query "gh inv new") => (gh "/pyinvoke/invoke/issues/new"))
 
        (fact "anything else becomes an issue search for that project id"
-             (query "gh inv lolcats") =>
-             (gh "/pyinvoke/invoke/search?q=lolcats&ref=cmdform&type=Issues")))
+             (query "gh inv lolcats") => (gh-issue-search "lolcats")
+             (query "gh inv a query with spaces") => (gh-issue-search "a query with spaces")))
