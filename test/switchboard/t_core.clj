@@ -28,4 +28,7 @@
              (query "gh") => (gh ""))
 
        (fact "bare project id just hits its landing page"
-             (query "gh inv") => (gh "/pyinvoke/invoke")))
+             (query "gh inv") => (gh "/pyinvoke/invoke"))
+
+       (fact "project id plus issue number goes to that issue"
+             (query "gh inv 123") => (gh "/pyinvoke/invoke/issues/123")))

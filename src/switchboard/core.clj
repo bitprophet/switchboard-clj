@@ -16,20 +16,28 @@
   (:gen-class))
 
 
-;; Map of Github projects' shorthand identifiers.
+;; Map of Github projects' shorthand identifiers; used with `gh` below.
 (def github-projects {"inv" "pyinvoke/invoke"})
+
+(defn gh [x] (str "https://github.com" (if x (str "/" x))))
 
 ;; Github module, key: `gh`
 ;;
 ;; * Empty invocation (`gh`): go to `github.com`.
 ;; * Shorthand project name found in `github-projects` (e.g. `gh inv`): go to
 ;;   its project page.
+;; * Project name + issue number (`gh inv 123`): go to that issue's page.
 (defn github [rest]
-  (cond
-    (contains? github-projects rest) (str
-                                       "https://github.com/"
-                                       (github-projects rest))
-    (nil? rest) "https://github.com"))
+  (if-not (nil? rest)
+    (let [[proj rest] (split rest #" " 2)]
+      (if (contains? github-projects proj)
+        (cond
+          (nil? rest) (gh (github-projects proj))
+          (re-matches #"\d+" rest) (gh (str
+                                         (github-projects proj)
+                                         "/issues/"
+                                         rest)))))
+    (gh nil)))
 
 
 ;; Dispatch requests to given modules based on first word ("key").
