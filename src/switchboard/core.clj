@@ -9,7 +9,7 @@
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.stacktrace :refer [wrap-stacktrace-web]]
             [ring.util.response :refer [not-found, redirect]]
-            [clojure.string :refer [split]]
+            [clojure.string :refer [split, join]]
             [clojure.pprint :refer [pprint]]
             [puget.printer :refer [cprint]]
             [org.httpkit.client :as http])
@@ -19,7 +19,7 @@
 ;; Map of Github projects' shorthand identifiers; used with `gh` below.
 (def github-projects {"inv" "pyinvoke/invoke"})
 
-(defn gh [x] (str "https://github.com" (if x (str "/" x))))
+(defn gh [& xs] (join "/" (conj (remove nil? xs) "https://github.com")))
 
 ;; Github module, key: `gh`
 ;;
@@ -34,24 +34,20 @@
 ;;   expands to `github.com/owner/repo`.
 (defn github [rest]
   (if (nil? rest)
-    (gh nil)
+    (gh)
     (let [[proj rest] (split rest #" " 2)]
       (if (contains? github-projects proj)
         (cond
           ; Testing for nil rest must come first to avoid NPEs/etc during regex
           ; tests farther down.
           (nil? rest) (gh (github-projects proj))
-          (= "new" rest) (gh (str (github-projects proj) "/issues/new"))
-          (re-matches #"\d+" rest) (gh (str
-                                         (github-projects proj)
-                                         "/issues/"
-                                         rest))
-          :else (gh (str
-                      (github-projects proj)
-                      "/search?q="
-                      rest
-                      "&ref=cmdform&type=Issues")))
-        (gh (str proj rest))))))
+          (= "new" rest) (gh (github-projects proj) "issues/new")
+          (re-matches #"\d+" rest) (gh (github-projects proj) "issues" rest)
+          :else (gh (github-projects proj) (str
+                                             "search?q="
+                                             rest
+                                             "&ref=cmdform&type=Issues")))
+        (gh proj rest)))))
 
 
 ;; Dispatch requests to given modules based on first word ("key").
