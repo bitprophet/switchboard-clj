@@ -26,18 +26,22 @@
 ;; * Empty invocation (`gh`): go to `github.com`.
 ;; * Shorthand project name found in `github-projects` (e.g. `gh inv`): go to
 ;;   its project page.
-;; * Project name + issue number (`gh inv 123`): go to that issue's page.
+;; * Project + issue number (`gh inv 123`): go to that issue's page.
+;; * Project + 'new' (`gh inv new`): go to 'new issue' page.
 (defn github [rest]
-  (if-not (nil? rest)
+  (if (nil? rest)
+    (gh nil)
     (let [[proj rest] (split rest #" " 2)]
       (if (contains? github-projects proj)
         (cond
+          ; Testing for nil rest must come first to avoid NPEs/etc during regex
+          ; tests farther down.
           (nil? rest) (gh (github-projects proj))
+          (= "new" rest) (gh (str (github-projects proj) "/issues/new"))
           (re-matches #"\d+" rest) (gh (str
                                          (github-projects proj)
                                          "/issues/"
-                                         rest)))))
-    (gh nil)))
+                                         rest)))))))
 
 
 ;; Dispatch requests to given modules based on first word ("key").

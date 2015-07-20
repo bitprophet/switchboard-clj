@@ -31,4 +31,7 @@
              (query "gh inv") => (gh "/pyinvoke/invoke"))
 
        (fact "project id plus issue number goes to that issue"
-             (query "gh inv 123") => (gh "/pyinvoke/invoke/issues/123")))
+             (query "gh inv 123") => (gh "/pyinvoke/invoke/issues/123"))
+
+       (fact "project id plus 'new' goes to issue creation page"
+             (query "gh inv new") => (gh "/pyinvoke/invoke/issues/new")))
