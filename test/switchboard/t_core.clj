@@ -48,6 +48,8 @@
              (query "gh inv lolcats") => (gh-issue-search "lolcats")
              (query "gh inv a query with spaces") => (gh-issue-search "a query with spaces"))
 
-       (future-fact "organization id expands to organization homepage")
+       (fact "organization id expands to organization homepage"
+             (query "gh ua") => (gh "/urbanairship"))
 
-       (future-fact "organization id plus more, expands organization URL"))
+       (fact "organization id plus more, expands organization URL"
+             (query "gh ua/tessera") => (gh "/urbanairship/tessera")))
