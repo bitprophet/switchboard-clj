@@ -22,17 +22,30 @@
 (defn gh [& xs] (join "/" (conj (remove nil? xs) "https://github.com")))
 (defn gh-proj [proj & xs] (apply gh (github-projects proj) xs))
 
-;; Github module, key: `gh`
+;; `gh`: GitHub expansions
+;;
+;; **Basics**
 ;;
 ;; * Empty invocation (`gh`): go to `github.com`.
+;; * Anything not matching one of the other rules: simply slapped onto
+;;   github.com, e.g. `gh owner/repo` expands to `github.com/owner/repo`.
+;;
+;; **Project shortcuts**
+;;
 ;; * Shorthand project name found in `github-projects` (e.g. `gh inv`): go to
 ;;   its project page.
 ;; * Project + issue number (`gh inv 123`): go to that issue's page.
 ;; * Project + 'new' (`gh inv new`): go to 'new issue' page.
 ;; * Project + anything else (`gh inv namespace`): issue search on that
 ;;   project.
-;; * Anything else: simply slapped onto github.com, e.g. `gh owner/repo`
-;;   expands to `github.com/owner/repo`.
+;;
+;; **Organization shortcuts**
+;;
+;; * Shorthand organization name found in `github-orgs`, by itself (e.g. `gh
+;;   ua`): go to organization landing page.
+;; * Organization name plus a slash plus anything else (e.g. `gh ua/tessera`):
+;; expand organization URL out of the name (leading to e.g.
+;; `github.com/urbanairship/tessera`).
 (defn github [rest]
   (if (nil? rest)
     (gh)

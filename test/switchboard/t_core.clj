@@ -42,4 +42,8 @@
 
        (fact "anything else becomes an issue search for that project id"
              (query "gh inv lolcats") => (gh-issue-search "lolcats")
-             (query "gh inv a query with spaces") => (gh-issue-search "a query with spaces")))
+             (query "gh inv a query with spaces") => (gh-issue-search "a query with spaces"))
+
+       (future-fact "organization id expands to organization homepage")
+
+       (future-fact "organization id plus more, expands organization URL"))
