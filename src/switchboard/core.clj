@@ -28,6 +28,8 @@
 ;;   its project page.
 ;; * Project + issue number (`gh inv 123`): go to that issue's page.
 ;; * Project + 'new' (`gh inv new`): go to 'new issue' page.
+;; * Project + anything else (`gh inv namespace`): issue search on that
+;; project.
 (defn github [rest]
   (if (nil? rest)
     (gh nil)
@@ -41,7 +43,12 @@
           (re-matches #"\d+" rest) (gh (str
                                          (github-projects proj)
                                          "/issues/"
-                                         rest)))))))
+                                         rest))
+          :else (gh (str
+                      (github-projects proj)
+                      "/search?q="
+                      rest
+                      "&ref=cmdform&type=Issues")))))))
 
 
 ;; Dispatch requests to given modules based on first word ("key").
