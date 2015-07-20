@@ -20,6 +20,7 @@
 (def github-projects {"inv" "pyinvoke/invoke"})
 
 (defn gh [& xs] (join "/" (conj (remove nil? xs) "https://github.com")))
+(defn gh-proj [proj & xs] (apply gh (github-projects proj) xs))
 
 ;; Github module, key: `gh`
 ;;
@@ -40,13 +41,13 @@
         (cond
           ; Testing for nil rest must come first to avoid NPEs/etc during regex
           ; tests farther down.
-          (nil? rest) (gh (github-projects proj))
-          (= "new" rest) (gh (github-projects proj) "issues/new")
-          (re-matches #"\d+" rest) (gh (github-projects proj) "issues" rest)
-          :else (gh (github-projects proj) (str
-                                             "search?q="
-                                             rest
-                                             "&ref=cmdform&type=Issues")))
+          (nil? rest) (gh-proj proj)
+          (= "new" rest) (gh-proj proj "issues/new")
+          (re-matches #"\d+" rest) (gh-proj proj "issues" rest)
+          :else (gh-proj proj (str
+                                "search?q="
+                                rest
+                                "&ref=cmdform&type=Issues")))
         (gh proj rest)))))
 
 
