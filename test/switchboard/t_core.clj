@@ -11,12 +11,16 @@
 (defn gh [x] (redirect (str "https://github.com" x)))
 (defn gh-issue-search [x] (gh (str "/pyinvoke/invoke/search?q=" x "&ref=cmdform&type=Issues")))
 
+(def error-response {:body "What?", :status 400})
+
 
 (facts "general behavior"
 
-       (future-fact "lack of query param displays help info")
+       (fact "lack of query param displays error"
+             (core/app (mock/request :get "" {})) => error-response)
 
-       (future-fact "present but empty query param value displays help info")
+       (fact "present but empty query param value displays error"
+             (core/app (mock/request :get "" {:query ""})) => error-response)
 
        (fact "if no submodule is matched, default is to Google"
              (query "nope") => (goog "nope")

@@ -76,9 +76,9 @@
 ; Basic HTTP handler logic
 (defn handler [request]
   (let [query (-> request :params :query)]
-    (if-not (nil? query)
+    (if-not (empty? query)
       (redirect (dispatch (split query #" " 2)))
-      (not-found "What are you even doing?"))))
+      {:body "What?", :status 400})))
 
 ; App wrapping requests w/ easy access to params via map+keyword
 (def app (-> handler
