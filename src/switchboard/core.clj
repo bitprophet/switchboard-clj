@@ -29,7 +29,9 @@
 ;; * Project + issue number (`gh inv 123`): go to that issue's page.
 ;; * Project + 'new' (`gh inv new`): go to 'new issue' page.
 ;; * Project + anything else (`gh inv namespace`): issue search on that
-;; project.
+;;   project.
+;; * Anything else: simply slapped onto github.com, e.g. `gh owner/repo`
+;;   expands to `github.com/owner/repo`.
 (defn github [rest]
   (if (nil? rest)
     (gh nil)
@@ -48,7 +50,8 @@
                       (github-projects proj)
                       "/search?q="
                       rest
-                      "&ref=cmdform&type=Issues")))))))
+                      "&ref=cmdform&type=Issues")))
+        (gh (str proj rest))))))
 
 
 ;; Dispatch requests to given modules based on first word ("key").

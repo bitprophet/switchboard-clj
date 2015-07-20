@@ -27,6 +27,9 @@
        (fact "bare key just hits homepage"
              (query "gh") => (gh ""))
 
+       (fact "anything not a project id is appended to github.com"
+             (query "gh somebody/project") => (gh "/somebody/project"))
+
        (fact "bare project id just hits its landing page"
              (query "gh inv") => (gh "/pyinvoke/invoke"))
 
