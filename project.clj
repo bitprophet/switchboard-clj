@@ -20,7 +20,11 @@
 
   ;; Lein plugins & their config
   :plugins [[lein-midje "3.1.3"]
+            [lein-ring "0.8.7"]
             [lein-marginalia "0.8.0"]]
+
+  ;; "Prod" lein server invokable via 'lein ring'
+  :ring {:handler switchboard.core/human-app :port 8081}
 
   ;; REPL init
   :repl-options {:init (do
