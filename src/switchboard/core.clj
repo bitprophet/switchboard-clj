@@ -17,7 +17,9 @@
 
 
 ;; Map of Github projects' shorthand identifiers; used with `gh` below.
-(def github-projects {"inv" "pyinvoke/invoke"})
+(def github-projects {"inv" "pyinvoke/invoke"
+                      "fab" "fabric/fabric"
+                      "par" "paramiko/paramiko"})
 
 ;; Same but for organizations
 (def github-orgs {"ua" "urbanairship"})
