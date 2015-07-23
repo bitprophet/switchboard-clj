@@ -49,8 +49,10 @@
                (query "gh inv new") => (gh "/pyinvoke/invoke/issues/new"))
 
          (fact "anything else becomes an issue search for that project id"
-               (query "gh inv lolcats") => (gh-issue-search "lolcats")
-               (query "gh inv a query with spaces") => (gh-issue-search "a query with spaces")))
+               (query "gh inv lolcats")
+                  => (gh-issue-search "lolcats")
+               (query "gh inv a query with spaces")
+                  => (gh-issue-search "a query with spaces")))
 
        (facts "about account searching"
 
