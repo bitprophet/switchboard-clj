@@ -32,8 +32,15 @@
 ;; **Basics**
 ;;
 ;; * Empty invocation (`gh`): go to `github.com`.
-;; * Anything not matching one of the other rules: simply slapped onto
-;;   github.com, e.g. `gh owner/repo` expands to `github.com/owner/repo`.
+;; * Anything not matching one of the other rules:
+;;     * First, the input is interpreted as being a repo name under each of the
+;;       accounts listed in `github-accounts` (in order) and tested for
+;;       existence. E.g. if `(def github-accounts ["foo" "bar"])`, `gh blah`
+;;       will first check for `github.com/foo/blah`, redirecting to it if it
+;;       exists, then will check `github.com/bar/blah`, etc.
+;;     * Should all of those tests fail, the input is simply slapped onto
+;;       `github.com/` directly, e.g. `gh randomuser/randomrepo` becomes
+;;       `github.com/randomuser/randomrepo`.
 ;;
 ;; **Project shortcuts**
 ;;
