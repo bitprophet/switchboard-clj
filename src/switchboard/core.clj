@@ -24,7 +24,9 @@
 ;; User/organization accounts to search within for repo names
 (def github-accounts ["bitprophet" "urbanairship"])
 
-(defn gh [& xs] (join "/" (conj (remove nil? xs) "https://github.com")))
+; Helpers
+(defn build-url [base & xs] (join "/" (conj (remove nil? xs) base)))
+(def gh (partial build-url "https://github.com"))
 (defn gh-proj [proj & xs] (apply gh (github-projects proj) xs))
 
 ;; `gh`: GitHub expansions
