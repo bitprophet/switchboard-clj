@@ -6,8 +6,7 @@
             :url "http://opensource.org/licenses/BSD-2-Clause"}
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [ring "1.3.0"]
-                 [http-kit "2.1.19"]
-                 [http-kit.fake "0.2.2"]]
+                 [http-kit "2.1.19"]]
 
   ;; Build-time options
   :main ^:skip-aot switchboard.core
@@ -17,6 +16,7 @@
   :profiles {:uberjar {:aot :all}
              :dev {:dependencies [[midje "1.6.3"]
                                   [ring/ring-mock "0.2.0"]
+                                  [http-kit.fake "0.2.2"]
                                   [marginalia "0.8.0"]]}}
 
   ;; Lein plugins & their config
