@@ -6,7 +6,8 @@
             :url "http://opensource.org/licenses/BSD-2-Clause"}
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [ring "1.3.0"]
-                 [http-kit "2.1.19"]]
+                 [http-kit "2.1.19"]
+                 [org.clojure/data.json "0.2.6"]]
 
   ;; Build-time options
   :main ^:skip-aot switchboard.core

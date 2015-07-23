@@ -12,7 +12,8 @@
             [clojure.string :refer [split, join]]
             [clojure.pprint :refer [pprint]]
             [puget.printer :refer [cprint]]
-            [org.httpkit.client :as http])
+            [org.httpkit.client :as http]
+            [clojure.data.json :as json])
   (:gen-class))
 
 
@@ -27,7 +28,21 @@
 ; Helpers
 (defn build-url [base & xs] (join "/" (conj (remove nil? xs) base)))
 (def gh (partial build-url "https://github.com"))
+(def gh-api (partial build-url "https://api.github.com"))
 (defn gh-proj [proj & xs] (apply gh (github-projects proj) xs))
+
+; External data - cached
+(def gh-token (System/getenv "SWITCHBOARD_GITHUB_TOKEN"))
+
+
+; Github subroutines
+(defn repo-from-accounts [proj]
+  (first (filter
+           #(= 200 (:status @%))
+           (map
+             #(http/get (gh-api "repos" % proj) {:oauth-token gh-token})
+             github-accounts))))
+
 
 ;; `gh`: GitHub expansions
 ;;
@@ -67,17 +82,15 @@
                                 "search?q="
                                 rest
                                 "&ref=cmdform&type=Issues")))
-        (let [result (first (filter #(= 200 (:status @%))
-                                    (map #(http/head (gh % proj))
-                                         github-accounts)))]
-              (if (nil? result)
-                ; Fall-through: just slap whatever strings were given onto
-                ; github. If 'rest' is empty or nil, it won't mattress.
-                (gh proj rest)
-                ; Got an account-based result -> go there (looking at response
-                ; data since it's easier than trying to reserve the arg given
-                ; to http/head up in the filter-map)
-                (-> @result :opts :url)))))))
+        (let [result (repo-from-accounts proj)]
+          (if (nil? result)
+            ; Fall-through: just slap whatever strings were given onto
+            ; github. If 'rest' is empty or nil, it won't mattress.
+            (gh proj rest)
+            ; Got an account-based result -> go there (looking at response
+            ; data since it's easier than trying to reserve the arg given
+            ; to http/head up in the filter-map)
+            ((json/read-str (:body @result)) "html_url")))))))
 
 
 ;; Dispatch requests to given modules based on first word ("key").
