@@ -29,27 +29,25 @@
 
 (facts "concerning github"
 
-       (fact "bare key just hits homepage"
-             (query "gh") => (gh ""))
+       (facts "about basic behavior"
 
-       (fact "anything not a project id is appended to github.com"
-             (query "gh somebody/project") => (gh "/somebody/project"))
+         (fact "bare key just hits homepage"
+               (query "gh") => (gh ""))
 
-       (fact "bare project id just hits its landing page"
-             (query "gh inv") => (gh "/pyinvoke/invoke"))
+         (fact "anything not a project id, etc, is appended to github.com"
+               (query "gh somebody/project") => (gh "/somebody/project")))
 
-       (fact "project id plus issue number goes to that issue"
-             (query "gh inv 123") => (gh "/pyinvoke/invoke/issues/123"))
+       (facts "about specific projects"
 
-       (fact "project id plus 'new' goes to issue creation page"
-             (query "gh inv new") => (gh "/pyinvoke/invoke/issues/new"))
+         (fact "bare project id just hits its landing page"
+               (query "gh inv") => (gh "/pyinvoke/invoke"))
 
-       (fact "anything else becomes an issue search for that project id"
-             (query "gh inv lolcats") => (gh-issue-search "lolcats")
-             (query "gh inv a query with spaces") => (gh-issue-search "a query with spaces"))
+         (fact "project id plus issue number goes to that issue"
+               (query "gh inv 123") => (gh "/pyinvoke/invoke/issues/123"))
 
-       (fact "organization id expands to organization homepage"
-             (query "gh ua") => (gh "/urbanairship"))
+         (fact "project id plus 'new' goes to issue creation page"
+               (query "gh inv new") => (gh "/pyinvoke/invoke/issues/new"))
 
-       (fact "organization id plus more, expands organization URL"
-             (query "gh ua/tessera") => (gh "/urbanairship/tessera")))
+         (fact "anything else becomes an issue search for that project id"
+               (query "gh inv lolcats") => (gh-issue-search "lolcats")
+               (query "gh inv a query with spaces") => (gh-issue-search "a query with spaces"))))

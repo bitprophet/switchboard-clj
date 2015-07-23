@@ -43,14 +43,6 @@
 ;; * Project + 'new' (`gh inv new`): go to 'new issue' page.
 ;; * Project + anything else (`gh inv namespace`): issue search on that
 ;;   project.
-;;
-;; **Organization shortcuts**
-;;
-;; * Shorthand organization name found in `github-orgs`, by itself (e.g. `gh
-;;   ua`): go to organization landing page.
-;; * Organization name plus a slash plus anything else (e.g. `gh ua/tessera`):
-;; expand organization URL out of the name (leading to e.g.
-;; `github.com/urbanairship/tessera`).
 (defn github [rest]
   (if (nil? rest)
     (gh)
