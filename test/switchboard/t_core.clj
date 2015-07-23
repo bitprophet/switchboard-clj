@@ -1,7 +1,8 @@
 (ns switchboard.t-core
   (:require [switchboard.core :as core]
             [midje.sweet :refer :all]
-            [ring.mock.request :as mock]))
+            [ring.mock.request :as mock])
+  (:use org.httpkit.fake))
 
 
 (defn query [x] (core/app (mock/request :get "" {:query x})))
@@ -56,6 +57,10 @@
 
        (facts "about account searching"
 
-         (future-fact "when input attached to an account yields a repo, go there")
+         (with-fake-http ["https://github.com/bitprophet/myrepo" 200
+                          "https://github.com/urbanairship/myrepo" 404]
 
-         (future-fact "when first account doesn't match, next is tried")))
+           (fact "when input attached to an account yields a repo, go there"
+                 (query "gh myrepo") => (gh "/bitprophet/myrepo"))
+
+           (fact "when first account doesn't match, next is tried"))))

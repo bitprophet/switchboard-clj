@@ -21,8 +21,8 @@
                       "fab" "fabric/fabric"
                       "par" "paramiko/paramiko"})
 
-;; Same but for organizations
-(def github-orgs {"ua" "urbanairship"})
+;; User/organization accounts to search within for repo names
+(def github-accounts ["bitprophet" "urbanairship"])
 
 (defn gh [& xs] (join "/" (conj (remove nil? xs) "https://github.com")))
 (defn gh-proj [proj & xs] (apply gh (github-projects proj) xs))
@@ -65,12 +65,17 @@
                                 "search?q="
                                 rest
                                 "&ref=cmdform&type=Issues")))
-        (let [[org repo] (split proj #"/" 2)]
-          (if (contains? github-orgs org)
-            (gh (github-orgs org) repo)
-            ; Fall-through: just slap whatever strings were given onto github.
-            ; If 'rest' is empty or nil, it won't mattress.
-            (gh proj rest)))))))
+        (let [result (first (filter #(= 200 (:status @%))
+                                    (map #(http/head (gh % proj))
+                                         github-accounts)))]
+              (if (nil? result)
+                ; Fall-through: just slap whatever strings were given onto
+                ; github. If 'rest' is empty or nil, it won't mattress.
+                (gh proj rest)
+                ; Got an account-based result -> go there (looking at response
+                ; data since it's easier than trying to reserve the arg given
+                ; to http/head up in the filter-map)
+                (-> @result :opts :url)))))))
 
 
 ;; Dispatch requests to given modules based on first word ("key").
