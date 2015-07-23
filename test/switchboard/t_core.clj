@@ -58,9 +58,12 @@
        (facts "about account searching"
 
          (with-fake-http ["https://github.com/bitprophet/myrepo" 200
-                          "https://github.com/urbanairship/myrepo" 404]
+                          "https://github.com/urbanairship/myrepo" 404
+                          "https://github.com/bitprophet/otherrepo" 404
+                          "https://github.com/urbanairship/otherrepo" 200]
 
            (fact "when input attached to an account yields a repo, go there"
                  (query "gh myrepo") => (gh "/bitprophet/myrepo"))
 
-           (fact "when first account doesn't match, next is tried"))))
+           (fact "when first account doesn't match, next is tried"
+                 (query "gh otherrepo") => (gh "/urbanairship/otherrepo")))))
