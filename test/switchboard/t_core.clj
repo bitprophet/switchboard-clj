@@ -50,4 +50,10 @@
 
          (fact "anything else becomes an issue search for that project id"
                (query "gh inv lolcats") => (gh-issue-search "lolcats")
-               (query "gh inv a query with spaces") => (gh-issue-search "a query with spaces"))))
+               (query "gh inv a query with spaces") => (gh-issue-search "a query with spaces")))
+
+       (facts "about account searching"
+
+         (future-fact "when input attached to an account yields a repo, go there")
+
+         (future-fact "when first account doesn't match, next is tried")))
