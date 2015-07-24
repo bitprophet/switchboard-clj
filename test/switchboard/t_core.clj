@@ -7,7 +7,7 @@
 
 
 (defn query [x] (core/app (mock/request :get "" {:query x})))
-(defn redirect [x] {:body "" :status 302 :headers {"Location" x}})
+(defn redirect [x] {:body "" :status 307 :headers {"Location" x}})
 
 (defn goog [x] (redirect (str "https://google.com/search?q=" x)))
 (defn gh [x] (redirect (str "https://github.com" x)))

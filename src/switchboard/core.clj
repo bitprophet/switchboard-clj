@@ -106,7 +106,8 @@
 (defn handler [request]
   (let [query (-> request :params :query)]
     (if-not (empty? query)
-      (redirect (dispatch (split query #" " 2)))
+      ; Use HTTP 307 so browsers don't cache when manually testing/poking
+      (redirect (dispatch (split query #" " 2)) :temporary-redirect)
       {:body "What?", :status 400})))
 
 ; App wrapping requests w/ easy access to params via map+keyword
