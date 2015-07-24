@@ -11,11 +11,9 @@
 
   ;; Build-time options
   :main ^:skip-aot switchboard.core
-  :target-path "target/%s"
 
   ;; Profiles
-  :profiles {:uberjar {:aot :all}
-             :dev {:dependencies [[midje "1.6.3"]
+  :profiles {:dev {:dependencies [[midje "1.6.3"]
                                   [ring/ring-mock "0.2.0"]
                                   [http-kit.fake "0.2.2"]
                                   [marginalia "0.8.0"]]}}
