@@ -1,7 +1,7 @@
 (defproject switchboard "0.1.0-SNAPSHOT"
   ;; Core info
   :description "Browser search backend featuring shortcuts & smart searching."
-  :url "http://example.com/FIXME"
+  :url "https://github.com/bitprophet/switchboard"
   :license {:name "BSD 2-Clause License"
             :url "http://opensource.org/licenses/BSD-2-Clause"}
   :dependencies [[org.clojure/clojure "1.6.0"]
@@ -25,10 +25,10 @@
             [lein-ring "0.8.7"]
             [lein-marginalia "0.8.0"]]
 
-  ;; "Prod" lein server invokable via 'lein ring'
+  ;; "Prod" lein server invokable via 'lein ring server-headless'
   :ring {:handler switchboard.core/human-app :port 8081}
 
-  ;; REPL init
+  ;; Personal REPL development setup
   :repl-options {:init (do
     ;; Load & autorun test suite
     (use 'midje.repl)
