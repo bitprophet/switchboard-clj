@@ -87,9 +87,7 @@
             ; Fall-through: just slap whatever strings were given onto
             ; github. If 'rest' is empty or nil, it won't mattress.
             (gh proj rest)
-            ; Got an account-based result -> go there (looking at response
-            ; data since it's easier than trying to reserve the arg given
-            ; to http/head up in the filter-map)
+            ; Got an account-based result -> go there
             ((json/read-str (:body @result)) "html_url")))))))
 
 
