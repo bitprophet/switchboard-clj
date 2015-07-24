@@ -43,6 +43,18 @@
              #(http/get (gh-api "repos" % proj) {:oauth-token gh-token})
              github-accounts))))
 
+(defn github-project-dispatch [proj rest]
+  (cond
+    ; Landing page if just-the-shorthand.
+    ; Testing for nil rest must come first to avoid NPEs/etc during regex
+    ; tests farther down.
+    (nil? rest) (gh-proj proj)
+    ; New issue
+    (= "new" rest) (gh-proj proj "issues/new")
+    ; Specific issue number
+    (re-matches #"\d+" rest) (gh-proj proj "issues" rest)
+    ; Issue text search
+    :else (gh-proj proj (str "search?q=" rest "&ref=cmdform&type=Issues"))))
 
 ;; `gh`: GitHub expansions
 ;;
@@ -69,26 +81,18 @@
 ;;   project.
 (defn github [rest]
   (if (nil? rest)
+    ; Base case: github.com
     (gh)
     (let [[proj rest] (split rest #" " 2)]
       (if (contains? github-projects proj)
-        (cond
-          ; Testing for nil rest must come first to avoid NPEs/etc during regex
-          ; tests farther down.
-          (nil? rest) (gh-proj proj)
-          (= "new" rest) (gh-proj proj "issues/new")
-          (re-matches #"\d+" rest) (gh-proj proj "issues" rest)
-          :else (gh-proj proj (str
-                                "search?q="
-                                rest
-                                "&ref=cmdform&type=Issues")))
+        ; First word is project shorthand: enter per-project logic
+        (github-project-dispatch proj rest)
         (let [result (repo-from-accounts proj)]
-          (if (nil? result)
-            ; Fall-through: just slap whatever strings were given onto
-            ; github. If 'rest' is empty or nil, it won't mattress.
-            (gh proj rest)
-            ; Got an account-based result -> go there
-            ((json/read-str (:body @result)) "html_url")))))))
+          (if-not (nil? result)
+            ; API scan found a repo in github-accounts: go there.
+            ((json/read-str (:body @result)) "html_url")
+            ; Anything else: treat as arbitrary github.com URI path.
+            (gh proj rest)))))))
 
 
 ;; Dispatch requests to given modules based on first word ("key").
