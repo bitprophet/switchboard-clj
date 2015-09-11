@@ -5,26 +5,13 @@ Switchboard is a browser search backend server, inspired by
 
 ## Installation
 
-Download from clojars or something if it's up there, otherwise, get it from
-wherever you're reading this?
+I might put in on clojars if anybody asks me to, otherwise, just get the
+source.
 
 ## Usage
 
-FIXME: explanation
-
-    $ java -jar switchboard-0.1.0-standalone.jar [args]
-
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
+`lein ring server-headless` with `SWITCHBOARD_GITHUB_TOKEN` set to a personal
+Github API key and `LEIN_NO_DEV` set to `1`.
 
 ## License
 
