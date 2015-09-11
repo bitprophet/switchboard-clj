@@ -11,13 +11,21 @@
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.stacktrace :refer [wrap-stacktrace-web]]
             [ring.util.response :refer [redirect]]
+            [org.httpkit.client :as http]
             [switchboard.utils :refer :all]
             [switchboard.github :refer [github]]))
 
 
 ;; TODO: move to its own module, meh
+(def py (partial build-url "https://docs.python.org"))
 (defn python [rest]
-  "http://docs.python.org/2.6/library/")
+  (if (nil? rest)
+    (py "2.6" "library")
+    (let [direct (py "2.6" "library" (str rest ".html"))]
+      (if (= (@(http/head direct) :status) 200)
+        direct
+        (py "2.6" (str "search.html?q=" rest))))))
+
 
 
 ;; Dispatch requests to given modules based on first word ("key").

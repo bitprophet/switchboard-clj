@@ -1,19 +1,23 @@
 (ns switchboard.t-python
   (:require [midje.sweet :refer :all]
+            [org.httpkit.fake :refer [with-fake-http]]
             [switchboard.t-utils :refer :all]))
 
 
-(defn py [x] (redirect (str "http://docs.python.org" x)))
+(defn py [x] (redirect (str "https://docs.python.org" x)))
 
 
 (facts "about basic behavior"
 
   (fact "bare key  just hits 2.6 stdlib landing page"
-        (query "py") => (py "/2.6/library/"))
+        (query "py") => (py "/2.6/library"))
 
-  (fact "direct module name hits become straight redirects")
+  (with-fake-http ["https://docs.python.org/2.6/library/operator.html" "ok"]
+    (fact "direct module name hits become straight redirects"
+          (query "py operator") => (py "/2.6/library/operator.html")))
 
-  (fact "non module name hits become generic searches"))
+  (fact "non module name hits become generic searches"
+        (query "py lol wut") => (py "/2.6/search.html?q=lol wut")))
 
 
 (facts "about different Python versions"
