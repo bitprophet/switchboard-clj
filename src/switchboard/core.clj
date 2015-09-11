@@ -15,12 +15,18 @@
             [switchboard.github :refer [github]]))
 
 
+;; TODO: move to its own module, meh
+(defn python [rest]
+  "http://docs.python.org/2.6/library/")
+
+
 ;; Dispatch requests to given modules based on first word ("key").
 ;;
 ;; When no matching key is found, all text is used as-is in a Google search.
 (defn dispatch [[key rest]]
   (case key
     "gh" (github rest)
+    "py" (python rest)
     (str "https://google.com/search?q=" key (if rest (str " " rest)))))
 
 
