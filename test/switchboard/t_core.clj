@@ -1,9 +1,7 @@
 (ns switchboard.t-core
-  (:require [switchboard.core :as core]
-            [switchboard.utils :refer :all]
+  (:require [switchboard.utils :refer :all]
             [switchboard.t-utils :refer :all]
-            [midje.sweet :refer :all]
-            [ring.mock.request :as mock]))
+            [midje.sweet :refer :all]))
 
 
 (defn goog [x] (redirect (str "https://google.com/search?q=" x)))
