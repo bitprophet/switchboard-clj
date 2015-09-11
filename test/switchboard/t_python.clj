@@ -22,8 +22,10 @@
 
 (facts "about different Python versions"
 
-  (fact "py27 uses Python 2.7 docs")
+  (fact "py27 uses Python 2.7 docs"
+        (query "py27 os") => (py "/2.7/library/os.html"))
 
-  (fact "py3 uses Python 3.3 docs"))
+  (fact "py3 uses Python 3.3 docs")
+       (query "py3 re") => (py "/3.3/library/re.html"))
 
 

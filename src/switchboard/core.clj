@@ -18,14 +18,19 @@
 
 ;; TODO: move to its own module, meh
 (def py (partial build-url "https://docs.python.org"))
-(defn python [rest]
-  (if (nil? rest)
-    (py "2.6" "library")
-    (let [direct (py "2.6" "library" (str rest ".html"))]
-      (if (= (@(http/head direct) :status) 200)
-        direct
-        (py "2.6" (str "search.html?q=" rest))))))
+(defn python [version rest]
+  (let [py (partial py version)]
+    (if (nil? rest)
+      (py "library")
+      (let [direct (py "library" (str rest ".html"))]
+        (if (= (@(http/head direct) :status) 200)
+          direct
+          (py (str "search.html?q=" rest)))))))
 
+(def py26 (partial python "2.6"))
+(def py27 (partial python "2.7"))
+;; TODO: I might care about 3.4-specific shit someday?
+(def py3 (partial python "3.3"))
 
 
 ;; Dispatch requests to given modules based on first word ("key").
@@ -34,7 +39,9 @@
 (defn dispatch [[key rest]]
   (case key
     "gh" (github rest)
-    "py" (python rest)
+    "py" (py26 rest)
+    "py27" (py27 rest)
+    "py3" (py3 rest)
     (str "https://google.com/search?q=" key (if rest (str " " rest)))))
 
 
