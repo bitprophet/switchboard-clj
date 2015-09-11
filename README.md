@@ -28,6 +28,6 @@ FIXME: listing of options this app accepts.
 
 ## License
 
-Copyright © 2014 Jeff Forcier
+Copyright © 2015 Jeff Forcier
 
 Distributed under the BSD license; please see `LICENSE`.
