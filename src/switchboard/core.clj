@@ -17,6 +17,7 @@
 
 
 ;; TODO: move to its own module, meh
+;; TODO: try factoring out the common pattern between this and pypi
 (def py (partial build-url "https://docs.python.org"))
 (defn python [version rest]
   (let [py (partial py version)]
@@ -32,6 +33,15 @@
 ;; TODO: I might care about 3.4-specific shit someday?
 (def py3 (partial python "3.3"))
 
+(def -pypi (partial build-url "https://pypi.python.org"))
+(defn pypi [rest]
+  (if (nil? rest)
+    (-pypi)
+    (let [direct (-pypi "pypi" rest)]
+      (if (= (@(http/head direct) :status) 200)
+        direct
+        (-pypi (str "pypi?:action=search&submit=search&term=" rest))))))
+
 
 ;; Dispatch requests to given modules based on first word ("key").
 ;;
@@ -42,6 +52,7 @@
     "py" (py26 rest)
     "py27" (py27 rest)
     "py3" (py3 rest)
+    "pp" (pypi rest)
     (str "https://google.com/search?q=" key (if rest (str " " rest)))))
 
 
