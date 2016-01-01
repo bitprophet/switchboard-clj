@@ -15,6 +15,6 @@ Github API key and `LEIN_NO_DEV` set to `1`.
 
 ## License
 
-Copyright © 2015 Jeff Forcier
+Copyright © 2016 Jeff Forcier
 
 Distributed under the BSD license; please see `LICENSE`.
