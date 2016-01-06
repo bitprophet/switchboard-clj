@@ -43,6 +43,14 @@
         (-pypi (str "pypi?:action=search&submit=search&term=" rest))))))
 
 
+;; TODO: own module? maybe just a single "simple searches" module...
+(def ud (partial build-url "http://urbandictionary.com"))
+(defn urbandictionary [rest]
+  (if (nil? rest)
+    (ud)
+    (ud (str "define.php?term=" rest))))
+
+
 ;; Dispatch requests to given modules based on first word ("key").
 ;;
 ;; When no matching key is found, all text is used as-is in a Google search.
@@ -53,6 +61,7 @@
     "py27" (py27 rest)
     "py3" (py3 rest)
     "pp" (pypi rest)
+    "ud" (urbandictionary rest)
     (str "https://google.com/search?q=" key (if rest (str " " rest)))))
 
 
