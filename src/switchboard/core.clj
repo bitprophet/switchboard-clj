@@ -24,7 +24,7 @@
     (if (nil? rest)
       (py "library")
       (let [direct (py "library" (str rest ".html"))]
-        (if (= (@(http/head direct) :status) 200)
+        (if (exists? direct)
           direct
           (py (str "search.html?q=" rest)))))))
 
@@ -38,7 +38,7 @@
   (if (nil? rest)
     (-pypi)
     (let [direct (-pypi "pypi" rest)]
-      (if (= (@(http/head direct) :status) 200)
+      (if (exists? direct)
         direct
         (-pypi (str "pypi?:action=search&submit=search&term=" rest))))))
 
