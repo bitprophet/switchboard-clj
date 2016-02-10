@@ -51,6 +51,20 @@
     (ud (str "define.php?term=" rest))))
 
 
+;; TODO: ditto
+(def pb (partial build-url "https://pinboard.in"))
+(def pb-user "u:bitprophet")
+(defn pinboard [rest]
+  (if (nil? rest)
+    (pb pb-user)
+    (let [tag-url (pb pb-user (str "t:" rest))]
+      ; Sadly, an 'empty' page of bookmarks isn' a 404 or similar, so...we do
+      ; this instead. Easier than using auth + API for now.
+      (if-not (.contains (@(http/get tag-url) :body) "<span class=\"bookmark_count\">0</span>")
+        tag-url
+        (pb "search" pb-user (str "?query=" rest))))))
+
+
 ;; Dispatch requests to given modules based on first word ("key").
 ;;
 ;; When no matching key is found, all text is used as-is in a Google search.
@@ -62,6 +76,7 @@
     "py3" (py3 rest)
     "pp" (pypi rest)
     "ud" (urbandictionary rest)
+    "pb" (pinboard rest)
     (str "https://google.com/search?q=" key (if rest (str " " rest)))))
 
 
