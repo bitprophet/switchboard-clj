@@ -51,13 +51,14 @@
     (ud (str "define.php?term=" rest))))
 
 
-;; TODO: ditto
+;; TODO: split into own module
 (def pb (partial build-url "https://pinboard.in"))
 (def pb-user "u:bitprophet")
 (defn pinboard [rest]
   (if (nil? rest)
     (pb pb-user)
-    (let [tag-url (pb pb-user (str "t:" rest))]
+    (let [rest (http/url-encode rest)
+          tag-url (pb pb-user (str "t:" rest))]
       ; Sadly, an 'empty' page of bookmarks isn' a 404 or similar, so...we do
       ; this instead. Easier than using auth + API for now.
       (if-not (.contains (@(http/get tag-url) :body) "<span class=\"bookmark_count\">0</span>")

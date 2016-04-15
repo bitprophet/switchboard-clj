@@ -14,4 +14,7 @@
           (query "pb sysadmin") => (redirect "https://pinboard.in/u:bitprophet/t:sysadmin")))
 
     (fact "terms not matching a tag become a search"
-          (query "pb wat") => (redirect "https://pinboard.in/search/u:bitprophet/?query=wat")))
+          (query "pb wat") => (redirect "https://pinboard.in/search/u:bitprophet/?query=wat"))
+
+    (fact "multi-word terms also become a search instead of exploding, sheesh"
+          (query "pb wat now") => (redirect "https://pinboard.in/search/u:bitprophet/?query=wat+now")))
