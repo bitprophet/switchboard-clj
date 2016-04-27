@@ -35,7 +35,7 @@
                       "par" "paramiko/paramiko"})
 
 ;; User/organization accounts to search within for repo names
-(def github-accounts ["bitprophet" "urbanairship"])
+(def github-accounts ["bitprophet"])
 
 
 ; Helpers
