@@ -9,7 +9,9 @@
 
 (defn gh [x] (redirect (str "https://github.com" x)))
 
-(defn gh-issue-search [x] (gh (str "/pyinvoke/invoke/search?q=" x "&ref=cmdform&type=Issues")))
+(defn gh-issue-search [repo term]
+  (gh (str "/" repo "/search?q=" term "&ref=cmdform&type=Issues")))
+
 
 (def gh-api-repo (partial github/gh-api "repos"))
 
@@ -21,7 +23,8 @@
 (defn fake-gh-repo [[acct repo action]]
   [(gh-api-repo acct repo)
    (if (= :ok action)
-     (json/write-str {:html_url (github/gh acct repo)})
+     (json/write-str {:html_url (github/gh acct repo)
+                      :full_name (str acct "/" repo)})
      action)])
 
 (def fake-gh-repos (flatten (map fake-gh-repo fake-gh-repo-data)))
@@ -49,9 +52,13 @@
 
   (fact "anything else becomes an issue search for that project id"
         (query "gh inv lolcats")
-           => (gh-issue-search "lolcats")
+           => (gh-issue-search "pyinvoke/invoke" "lolcats")
         (query "gh inv a query with spaces")
-           => (gh-issue-search "a query with spaces")))
+           => (gh-issue-search "pyinvoke/invoke" "a query with spaces"))
+
+  (fact "this shorthand applies to all input, not just shorthands"
+        (query "gh someaccount/somerepo lolcats")
+          => (gh-issue-search "someaccount/somerepo" "lolcats")))
 
 
 (facts "about account searching"
@@ -59,7 +66,10 @@
   (with-fake-http fake-gh-repos
 
     (fact "when input attached to an account yields a repo, go there"
-          (query "gh myrepo") => (gh "/bitprophet/myrepo"))))
+          (query "gh myrepo") => (gh "/bitprophet/myrepo"))
+
+    (fact "shorthand syntax applies to private repos"
+          (query "gh myrepo 25") => (gh "/bitprophet/myrepo/issues/25"))))
 
     ; TODO: figure out correct way to use test data for
     ; github.clj/github-(projects|accounts) instead of relying on the real

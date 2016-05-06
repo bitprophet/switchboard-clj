@@ -41,7 +41,6 @@
 ; Helpers
 (def gh (partial build-url "https://github.com"))
 (def gh-api (partial build-url "https://api.github.com"))
-(defn gh-proj [proj & xs] (apply gh (github-projects proj) xs))
 
 
 ; External data - cached
@@ -61,26 +60,32 @@
     ; Landing page if just-the-shorthand.
     ; Testing for nil rest must come first to avoid NPEs/etc during regex
     ; tests farther down.
-    (nil? rest) (gh-proj proj)
+    (nil? rest) (gh proj)
     ; New issue
-    (= "new" rest) (gh-proj proj "issues/new")
+    (= "new" rest) (gh proj "issues/new")
     ; Specific issue number
-    (re-matches #"\d+" rest) (gh-proj proj "issues" rest)
+    (re-matches #"\d+" rest) (gh proj "issues" rest)
     ; Issue text search
-    :else (gh-proj proj (str "search?q=" rest "&ref=cmdform&type=Issues"))))
+    :else (gh proj (str "search?q=" rest "&ref=cmdform&type=Issues"))))
+
+
+(defn derive-full-name [proj]
+  ; First try shorthand mapping, returning match if found
+  (github-projects proj
+                   ; Then try expanding repo-name to account/repo-name
+                   (let [result (repo-from-accounts proj)]
+                     (if-not (nil? result)
+                       ; Found one; return its account/repo name form
+                       ((json/read-str (:body @result)) "full_name")
+                       ; Not there either, so give up & return input
+                       proj))))
 
 
 (defn github [rest]
   (if (nil? rest)
     ; Base case: github.com
     (gh)
+    ; Try expanding first input to repo full_name, then apply rules like
+    ; go-to-landing, go-to-issue-number, make-new-issue, etc
     (let [[proj rest] (string/split rest #" " 2)]
-      (if (contains? github-projects proj)
-        ; First word is project shorthand: enter per-project logic
-        (github-project-dispatch proj rest)
-        (let [result (repo-from-accounts proj)]
-          (if-not (nil? result)
-            ; API scan found a repo in github-accounts: go there.
-            ((json/read-str (:body @result)) "html_url")
-            ; Anything else: treat as arbitrary github.com URI path.
-            (gh proj rest)))))))
+      (github-project-dispatch (derive-full-name proj) rest))))
