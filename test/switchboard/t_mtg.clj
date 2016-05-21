@@ -10,4 +10,4 @@
         (query "mtg") => (redirect "http://mtgsalvation.com"))
 
   (fact "non-empty 'mtg' search term searches magiccards.info"
-        (query "mtg black lotus") => (redirect "http://magiccards.info/query?q=black lotus&v=scan&s=cname")))
+        (query "mtg black lotus") => (redirect "http://magiccards.info/query?v=scan&q=black lotus")))

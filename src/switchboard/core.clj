@@ -50,6 +50,16 @@
     (ud)
     (ud (str "define.php?term=" rest))))
 
+;; TODO: also good candidate for simple search refactor/module? but is only one
+;; to have different site for base vs rest cases...
+(defn mtg [rest]
+  (if (nil? rest)
+    "http://mtgsalvation.com"
+    ;; NOTE: v=scan means default to just-the-cards view, which is a nice list
+    ;; for multiple-hit results; the site automagically displays full view if
+    ;; only one hit, too. Less work for me!
+    (str "http://magiccards.info/query?v=scan&q=" rest)))
+
 
 ;; TODO: split into own module
 (def pb (partial build-url "https://pinboard.in"))
@@ -78,6 +88,7 @@
     "pp" (pypi rest)
     "ud" (urbandictionary rest)
     "pb" (pinboard rest)
+    "mtg" (mtg rest)
     (str "https://google.com/search?q=" key (if rest (str " " rest)))))
 
 
