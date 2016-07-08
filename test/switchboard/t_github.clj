@@ -15,10 +15,17 @@
 
 (def gh-api-repo (partial github/gh-api "repos"))
 
+(def fake-gh-accounts ["bitprophet" "employer" "employer2"])
+; TODO: surely there's a less shite way to describe this in a functional lang
 (def fake-gh-repo-data [["bitprophet" "myrepo" :ok]
                         ["employer" "myrepo" 404]
+                        ["employer2" "myrepo" 404]
                         ["bitprophet" "otherrepo" 404]
-                        ["employer" "otherrepo" :ok]])
+                        ["employer" "otherrepo" :ok]
+                        ["employer2" "otherrepo" 404]
+                        ["bitprophet" "yetanotherrepo" 404]
+                        ["employer" "yetanotherrepo" 404]
+                        ["employer2" "yetanotherrepo" :ok]])
 
 (defn fake-gh-repo [[acct repo action]]
   [(gh-api-repo acct repo)
@@ -63,16 +70,22 @@
 
 (facts "about account searching"
 
-  (with-fake-http fake-gh-repos
+  ; TODO: probably better way to handle this but it works for now :(
+  ; Rebinds the real module's accounts list to a known-at-test-time value.
+  ; Keeps us from having to modify the test to reflect the real values all the
+  ; time.
+  (with-redefs [github/github-accounts fake-gh-accounts]
 
-    (fact "when input attached to an account yields a repo, go there"
-          (query "gh myrepo") => (gh "/bitprophet/myrepo"))
+    (with-fake-http fake-gh-repos
 
-    (fact "shorthand syntax applies to private repos"
-          (query "gh myrepo 25") => (gh "/bitprophet/myrepo/issues/25"))))
+      (fact "when input attached to an account yields a repo, go there"
+            (query "gh myrepo") => (gh "/bitprophet/myrepo"))
 
-    ; TODO: figure out correct way to use test data for
-    ; github.clj/github-(projects|accounts) instead of relying on the real
-    ; thing. E.g. when employer accounts change...yea.
-    ;(fact "when first account doesn't match, next is tried"
-    ;      (query "gh otherrepo") => (gh "/employer/otherrepo"))))
+      (fact "shorthand syntax applies to private repos"
+            (query "gh myrepo 25") => (gh "/bitprophet/myrepo/issues/25"))
+
+      (fact "when first account doesn't match, next is tried"
+            (query "gh otherrepo") => (gh "/employer/otherrepo"))
+
+      (fact "cascading continues"
+            (query "gh yetanotherrepo") => (gh "/employer2/yetanotherrepo")))))
