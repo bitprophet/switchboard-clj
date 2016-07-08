@@ -35,7 +35,7 @@
                       "par" "paramiko/paramiko"})
 
 ;; User/organization accounts to search within for repo names
-(def github-accounts ["bitprophet"])
+(def github-accounts ["bitprophet" "mlab" "objectlabs" "mongolab"])
 
 
 ; Helpers
