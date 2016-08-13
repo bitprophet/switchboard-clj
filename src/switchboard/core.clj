@@ -84,6 +84,11 @@
     ;; Regular ol' GIS otherwise
     (str "https://www.google.com/search?tbm=isch&q=" rest)))
 
+(def -ann (partial build-url "http://www.animenewsnetwork.com"))
+(defn ann [rest]
+  (if (nil? rest)
+    (-ann)
+    (-ann "encyclopedia" "search" (str "name?q=" rest))))
 
 ;; Dispatch requests to given modules based on first word ("key").
 ;;
@@ -99,6 +104,7 @@
     "pb" (pinboard rest)
     "mtg" (mtg rest)
     "gis" (gis rest)
+    "ann" (ann rest)
     (str "https://google.com/search?q=" key (if rest (str " " rest)))))
 
 

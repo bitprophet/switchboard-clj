@@ -21,3 +21,7 @@
       (query "gis") => (redirect "https://images.google.com/")
       (query "gis apple") => (redirect "https://www.google.com/search?tbm=isch&q=apple")
       (query "gis apple pie") => (redirect "https://www.google.com/search?tbm=isch&q=apple pie"))
+
+(fact "ann searches Anime News Network"
+      (query "ann") => (redirect "http://www.animenewsnetwork.com")
+      (query "ann sword art online") => (redirect "http://www.animenewsnetwork.com/encyclopedia/search/name?q=sword art online"))
