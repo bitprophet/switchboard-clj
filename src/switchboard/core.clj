@@ -76,6 +76,15 @@
         (pb "search" pb-user (str "?query=" rest))))))
 
 
+(defn gis [rest]
+  (if (nil? rest)
+    ;; Empty search, while unlikely, can just take us to images.google.com -
+    ;; good for e.g. reverse image lookup. ¯\_(ツ)_/¯
+    "https://images.google.com/"
+    ;; Regular ol' GIS otherwise
+    (str "https://www.google.com/search?tbm=isch&q=" rest)))
+
+
 ;; Dispatch requests to given modules based on first word ("key").
 ;;
 ;; When no matching key is found, all text is used as-is in a Google search.
@@ -89,6 +98,7 @@
     "ud" (urbandictionary rest)
     "pb" (pinboard rest)
     "mtg" (mtg rest)
+    "gis" (gis rest)
     (str "https://google.com/search?q=" key (if rest (str " " rest)))))
 
 

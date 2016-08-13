@@ -16,3 +16,8 @@
 (fact "if no submodule is matched, default is to Google"
       (query "nope") => (goog "nope")
       (query "nope nohow") => (goog "nope nohow"))
+
+(fact "gis searches google image search"
+      (query "gis") => (redirect "https://images.google.com/")
+      (query "gis apple") => (redirect "https://www.google.com/search?tbm=isch&q=apple")
+      (query "gis apple pie") => (redirect "https://www.google.com/search?tbm=isch&q=apple pie"))
