@@ -63,6 +63,8 @@
     (nil? rest) (gh proj)
     ; New issue
     (= "new" rest) (gh proj "issues/new")
+    ; Milestones
+    (= "m" rest) (gh proj "milestones")
     ; Specific issue number
     (re-matches #"\d+" rest) (gh proj "issues" rest)
     ; Issue text search

@@ -57,6 +57,9 @@
   (fact "project id plus 'new' goes to issue creation page"
         (query "gh inv new") => (gh "/pyinvoke/invoke/issues/new"))
 
+  (fact "project id plus 'm' goes to milestones page"
+        (query "gh inv m") => (gh "/pyinvoke/invoke/milestones"))
+
   (fact "anything else becomes an issue search for that project id"
         (query "gh inv lolcats")
            => (gh-issue-search "pyinvoke/invoke" "lolcats")
