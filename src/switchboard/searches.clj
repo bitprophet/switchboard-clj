@@ -13,6 +13,15 @@
     (ud (str "define.php?term=" rest))))
 
 
+;; WowHead
+;; TODO: this could probably grow fun extra shorthand like github???
+(def wh (partial build-url "http://wowhead.com"))
+(defn wowhead [rest]
+  (if (nil? rest)
+    (wh)
+    (wh (str "search?q=" rest))))
+
+
 ;; Magic: the Gathering cards (via magiccards.info)
 ;; TODO: good candidate for simple search refactor/module? but is only one to
 ;; have different site for base vs rest cases...
