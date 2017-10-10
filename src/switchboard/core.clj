@@ -23,8 +23,8 @@
 (defn dispatch [[key rest]]
   (case key
     "gh" (github rest)
-    "py" (py26 rest)
-    "py27" (py27 rest)
+    "py" (py27 rest)
+    "py26" (py26 rest)
     "py3" (py3 rest)
     "pp" (pypi rest)
     "ud" (urbandictionary rest)
