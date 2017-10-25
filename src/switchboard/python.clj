@@ -15,8 +15,7 @@
 
 (def py26 (partial python "2.6"))
 (def py27 (partial python "2.7"))
-;; TODO: I might care about 3.4+-specific shit someday?
-(def py3 (partial python "3.3"))
+(def py3 (partial python "3.4"))
 
 
 (def -pypi (partial build-url "https://pypi.python.org"))
