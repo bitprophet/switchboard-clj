@@ -22,16 +22,13 @@
     (wh (str "search?q=" rest))))
 
 
-;; Magic: the Gathering cards (via magiccards.info)
+;; Magic: the Gathering cards (via scryfall.com)
 ;; TODO: good candidate for simple search refactor/module? but is only one to
 ;; have different site for base vs rest cases...
 (defn mtg [rest]
   (if (nil? rest)
-    "http://mtgsalvation.com"
-    ;; NOTE: v=scan means default to just-the-cards view, which is a nice list
-    ;; for multiple-hit results; the site automagically displays full view if
-    ;; only one hit, too. Less work for me!
-    (str "http://magiccards.info/query?v=scan&q=" rest)))
+    "https://mtg.gamepedia.com/Main_Page"
+    (str "https://scryfall.com/search?q=" (http/url-encode rest))))
 
 
 ;; My Pinboard bookmarks & tags
