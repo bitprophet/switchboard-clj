@@ -33,6 +33,7 @@
     "gis" (gis rest)
     "ann" (ann rest)
     "wh" (wowhead rest)
+    "fft" (fft rest)
     (str "https://google.com/search?q=" key (if rest (str " " rest)))))
 
 

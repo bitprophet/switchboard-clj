@@ -62,3 +62,8 @@
   (if (nil? rest)
     (-ann)
     (-ann "encyclopedia" "search" (str "name?q=" rest))))
+
+(defn fft [rest]
+  (if (nil? rest)
+    "https://www.gamefaqs.com/ps/197339-final-fantasy-tactics/faqs/3876"
+    (str "https://google.com/search?q=\"final fantasy tactics\" -\"grimoire\" -\"tactics advance\" " rest)))

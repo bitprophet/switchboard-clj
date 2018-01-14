@@ -25,3 +25,10 @@
 (fact "ann searches Anime News Network"
       (query "ann") => (redirect "http://www.animenewsnetwork.com")
       (query "ann sword art online") => (redirect "http://www.animenewsnetwork.com/encyclopedia/search/name?q=sword art online"))
+
+(fact "fft prefixes with 'Final Fantasy Tactics'"
+      ;; Huge and useful mechanics guide is as good a base as any
+      (query "fft") => (redirect "https://www.gamefaqs.com/ps/197339-final-fantasy-tactics/faqs/3876")
+      ;; Normally, search Google for FFT specific content (including attempts
+      ;; to filter out A/A2/etc)
+      (query "fft ramza") => (goog "\"final fantasy tactics\" -\"grimoire\" -\"tactics advance\" ramza"))
