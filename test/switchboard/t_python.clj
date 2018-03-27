@@ -5,7 +5,7 @@
 
 
 (defn py [x] (redirect (str "https://docs.python.org" x)))
-(defn pp [x] (redirect (str "https://pypi.python.org" x)))
+(defn pp [x] (redirect (str "https://pypi.org" x)))
 
 
 (facts "about basic behavior"
@@ -35,10 +35,10 @@
   (fact "bare 'pp' key just goes to pypi landing page"
         (query "pp") => (pp ""))
 
-  (with-fake-http ["https://pypi.python.org/pypi/paramiko" "ok"
-                   "https://pypi.python.org/pypi/lol" 404]
+  (with-fake-http ["https://pypi.org/project/paramiko" "ok"
+                   "https://pypi.org/project/lol" 404]
     (fact "direct package name hit goes straight there"
-          (query "pp paramiko") => (pp "/pypi/paramiko"))
+          (query "pp paramiko") => (pp "/project/paramiko"))
 
     (fact "'pp' with a non-exact-matching argument searches pypi"
-          (query "pp lol") => (pp "/pypi?:action=search&submit=search&term=lol"))))
+          (query "pp lol") => (pp "/search/?q=lol"))))

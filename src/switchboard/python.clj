@@ -18,11 +18,11 @@
 (def py3 (partial python "3.4"))
 
 
-(def -pypi (partial build-url "https://pypi.python.org"))
+(def -pypi (partial build-url "https://pypi.org"))
 (defn pypi [rest]
   (if (nil? rest)
     (-pypi)
-    (let [direct (-pypi "pypi" rest)]
+    (let [direct (-pypi "project" rest)]
       (if (exists? direct)
         direct
-        (-pypi (str "pypi?:action=search&submit=search&term=" rest))))))
+        (-pypi (str "search/?q=" rest))))))
