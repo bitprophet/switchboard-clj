@@ -24,7 +24,7 @@
             [lein-marginalia "0.8.0"]]
 
   ;; "Prod" lein server invokable via 'lein ring server-headless'
-  :ring {:handler switchboard.core/human-app :port 8081}
+  :ring {:handler switchboard.core/human-app :port 8787}
 
   ;; Personal REPL development setup
   :repl-options {:init (do
@@ -41,5 +41,5 @@
 
     ;; Spin up a dev jetty server
     (require '[ring.adapter.jetty :refer [run-jetty]])
-    (defonce server (run-jetty #'human-app {:port 8080 :join? false}))
+    (defonce server (run-jetty #'human-app {:port 8788 :join? false}))
     (.start server))})
