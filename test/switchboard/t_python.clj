@@ -26,8 +26,8 @@
   (fact "py26 uses Python 2.6 docs"
         (query "py26 os") => (py "/2.6/library/os.html"))
 
-  (fact "py3 uses Python 3.4 docs")
-       (query "py3 re") => (py "/3.4/library/re.html"))
+  (fact "py3 uses Python 3.6 docs")
+       (query "py3 re") => (py "/3.6/library/re.html"))
 
 
 (facts "regarding pypi search"

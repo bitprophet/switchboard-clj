@@ -15,7 +15,7 @@
 
 (def py26 (partial python "2.6"))
 (def py27 (partial python "2.7"))
-(def py3 (partial python "3.4"))
+(def py3 (partial python "3.6"))
 
 
 (def -pypi (partial build-url "https://pypi.org"))
