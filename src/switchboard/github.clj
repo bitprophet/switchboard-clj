@@ -35,7 +35,7 @@
                       "par" "paramiko/paramiko"
                       "ala" "bitprophet/alabaster"
                       "pat" "fabric/patchwork"
-                      "invoca" "pyinvoke/invocations"})
+                      "invoc" "pyinvoke/invocations"})
 
 ;; User/organization accounts to search within for repo names
 (def github-accounts ["bitprophet" "mlab" "objectlabs" "mongolab"])
