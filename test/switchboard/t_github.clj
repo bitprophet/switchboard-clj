@@ -60,6 +60,12 @@
   (fact "project id plus 'm' goes to milestones page"
         (query "gh inv m") => (gh "/pyinvoke/invoke/milestones"))
 
+  (fact "project id plus 'ms' goes to milestones page"
+        (query "gh inv ms") => (gh "/pyinvoke/invoke/milestones"))
+
+  (fact "project id plus 'milestones' goes to milestones page"
+        (query "gh inv milestones") => (gh "/pyinvoke/invoke/milestones"))
+
   ;; (fact "project id plus milestone name goes to that milestone page"
   ;;     (query "gh inv 2.3.0") => (gh "/pyinvoke/invoke/milestones/2.3.0")
         ;; TODO: this actually requires the API since the URLs are numeric IDs
