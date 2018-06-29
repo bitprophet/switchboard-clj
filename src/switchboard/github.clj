@@ -67,7 +67,7 @@
     ; New issue
     (= "new" rest) (gh proj "issues/new")
     ; Milestones
-    (some #{rest} ["m" "ms" "milestones"]) (gh proj "milestones")
+    (contains? #{"m" "ms" "milestones"} rest) (gh proj "milestones")
     ; Specific issue number
     (re-matches #"\d+" rest) (gh proj "issues" rest)
     ; Issue text search
