@@ -28,4 +28,4 @@
 
 (fact "nms goes to Gamepedia or searches Google directly"
       (query "nms") => (redirect "https://nomanssky.gamepedia.com")
-      (query "nms mark on map") => (redirect "https://www.google.com/search?tbm=isch&q=\"No Man's Sky\" mark on map"))
+      (query "nms mark on map") => (redirect "https://www.google.com/search?q=\"No Man's Sky\" mark on map"))

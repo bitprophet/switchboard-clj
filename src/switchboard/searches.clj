@@ -66,4 +66,4 @@
 (defn nms [rest]
   (if (nil? rest)
     "https://nomanssky.gamepedia.com"
-    (str "https://www.google.com/search?tbm=isch&q=\"No Man's Sky\" " rest)))
+    (str "https://www.google.com/search?q=\"No Man's Sky\" " rest)))
