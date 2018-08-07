@@ -29,3 +29,6 @@
 (fact "nms goes to Gamepedia or searches Google directly"
       (query "nms") => (redirect "https://nomanssky.gamepedia.com")
       (query "nms mark on map") => (redirect "https://www.google.com/search?q=\"No Man's Sky\" mark on map"))
+
+(fact "r/stuff goes to Reddit"
+      (query "r/spacex") => (redirect "https://www.reddit.com/r/spacex"))

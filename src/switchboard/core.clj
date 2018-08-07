@@ -21,20 +21,23 @@
 ;;
 ;; When no matching key is found, all text is used as-is in a Google search.
 (defn dispatch [[key rest]]
-  (case key
-    "gh" (github rest)
-    "py" (py3 rest)
-    "py2" (py2 rest)
-    "py36" (py36 rest)
-    "pp" (pypi rest)
-    "ud" (urbandictionary rest)
-    "pb" (pinboard rest)
-    "mtg" (mtg rest)
-    "gis" (gis rest)
-    "ann" (ann rest)
-    "wh" (wowhead rest)
-    "nms" (nms rest)
-    (str "https://google.com/search?q=" key (if rest (str " " rest)))))
+  ;; FUNKY NEW FEATURE: reddit support, with no prefix because it looks neat
+  (if (string/starts-with? key "r/")
+    (reddit key rest)
+    (case key
+      "gh" (github rest)
+      "py" (py3 rest)
+      "py2" (py2 rest)
+      "py36" (py36 rest)
+      "pp" (pypi rest)
+      "ud" (urbandictionary rest)
+      "pb" (pinboard rest)
+      "mtg" (mtg rest)
+      "gis" (gis rest)
+      "ann" (ann rest)
+      "wh" (wowhead rest)
+      "nms" (nms rest)
+      (str "https://google.com/search?q=" key (if rest (str " " rest))))))
 
 
 ; Basic HTTP handler logic

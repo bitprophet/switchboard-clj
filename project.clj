@@ -4,7 +4,7 @@
   :url "https://github.com/bitprophet/switchboard"
   :license {:name "BSD 2-Clause License"
             :url "http://opensource.org/licenses/BSD-2-Clause"}
-  :dependencies [[org.clojure/clojure "1.6.0"]
+  :dependencies [[org.clojure/clojure "1.8.0"]
                  [ring "1.4.0"]
                  [http-kit "2.1.19"]
                  [org.clojure/data.json "0.2.6"]]

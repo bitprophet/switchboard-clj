@@ -67,3 +67,7 @@
   (if (nil? rest)
     "https://nomanssky.gamepedia.com"
     (str "https://www.google.com/search?q=\"No Man's Sky\" " rest)))
+
+;; TODO: worth doing anything with 'rest'?
+(defn reddit [key rest]
+  (str "https://www.reddit.com/" key))
