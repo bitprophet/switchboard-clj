@@ -4,24 +4,24 @@
   :url "https://github.com/bitprophet/switchboard"
   :license {:name "BSD 2-Clause License"
             :url "http://opensource.org/licenses/BSD-2-Clause"}
-  :dependencies [[org.clojure/clojure "1.8.0"]
-                 [ring "1.4.0"]
-                 [http-kit "2.1.19"]
+  :dependencies [[org.clojure/clojure "1.9.0"]
+                 [ring "1.7.1"]
+                 [http-kit "2.3.0"]
                  [org.clojure/data.json "0.2.6"]]
 
   ;; Build-time options
   :main ^:skip-aot switchboard.core
 
   ;; Profiles
-  :profiles {:dev {:dependencies [[midje "1.6.3"]
-                                  [ring/ring-mock "0.2.0"]
+  :profiles {:dev {:dependencies [[midje "1.9.4"]
+                                  [ring/ring-mock "0.3.2"]
                                   [http-kit.fake "0.2.2"]
-                                  [marginalia "0.8.0"]]}}
+                                  [marginalia "0.9.1"]]}}
 
   ;; Lein plugins & their config
-  :plugins [[lein-midje "3.1.3"]
-            [lein-ring "0.8.7"]
-            [lein-marginalia "0.8.0"]]
+  :plugins [[lein-midje "3.2.1"]
+            [lein-ring "0.12.4"]
+            [lein-marginalia "0.9.0"]]
 
   ;; "Prod" lein server invokable via 'lein ring server-headless'
   :ring {:handler switchboard.core/human-app :port 8787}
