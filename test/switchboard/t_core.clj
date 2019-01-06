@@ -32,3 +32,6 @@
 
 (fact "r/stuff goes to Reddit"
       (query "r/spacex") => (redirect "https://www.reddit.com/r/spacex"))
+
+(fact "askme searches Ask Metafilter"
+      (query "askme snow tires") => (goog "site:ask.metafilter.com snow tires"))

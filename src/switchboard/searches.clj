@@ -71,3 +71,6 @@
 ;; TODO: worth doing anything with 'rest'?
 (defn reddit [key rest]
   (str "https://www.reddit.com/" key))
+
+(defn askme [rest]
+  (str "https://google.com/search?q=site:ask.metafilter.com " rest))

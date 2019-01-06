@@ -37,6 +37,7 @@
       "ann" (ann rest)
       "wh" (wowhead rest)
       "nms" (nms rest)
+      "askme" (askme rest)
       (str "https://google.com/search?q=" key (if rest (str " " rest))))))
 
 
