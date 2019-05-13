@@ -20,7 +20,7 @@
 
   ;; Lein plugins & their config
   :plugins [[lein-midje "3.2.1"]
-            [lein-ring "0.12.4"]
+            [lein-ring "0.12.5"]
             [lein-marginalia "0.9.0"]]
 
   ;; "Prod" lein server invokable via 'lein ring server-headless'
