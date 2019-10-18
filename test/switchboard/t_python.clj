@@ -18,6 +18,9 @@
           (query "py operator") => (py "/3.4/library/operator.html")))
 
   (fact "non module name hits become generic searches"
+        ;; Needs to actually:
+        ;; - read the response from that search URL
+        ;; - replace all hyperlinks within it to scrub the &highlight=xxx
         (query "py lol wut") => (py "/3.4/search.html?q=lol wut")))
 
 

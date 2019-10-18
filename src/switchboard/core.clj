@@ -45,8 +45,15 @@
 (defn handler [request]
   (let [query (-> request :params :query)]
     (if-not (empty? query)
-      ; Use HTTP 307 so browsers don't cache when manually testing/poking
-      (redirect (dispatch (string/split query #" " 2)) :temporary-redirect)
+      (let [result (dispatch (string/split query #" " 2))]
+        (pprint result)
+        (if (string? result)
+          ; Just-strings are expected to be URIs to redirect to; use HTTP 307
+          ; so browsers don't cache when manually testing/poking.
+          (redirect result :temporary-redirect)
+          ; Some dispatch results are NOT just URIs but full responses; return
+          ; as-is.
+          result))
       error-response)))
 
 
