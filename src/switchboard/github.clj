@@ -38,7 +38,7 @@
                       "invoc" "pyinvoke/invocations"})
 
 ;; User/organization accounts to search within for repo names
-(def github-accounts ["bitprophet" "mlab" "objectlabs" "mongolab"])
+(def github-accounts ["bitprophet"])
 
 
 ; Helpers
