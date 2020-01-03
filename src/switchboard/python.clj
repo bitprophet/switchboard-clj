@@ -14,8 +14,9 @@
           (py (str "search.html?q=" rest)))))))
 
 (def py2 (partial python "2.7"))
-(def py3 (partial python "3.4"))
+(def py3 (partial python "3"))
 (def py36 (partial python "3.6"))
+(def py37 (partial python "3.7"))
 
 
 (def -pypi (partial build-url "https://pypi.org"))

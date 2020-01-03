@@ -29,6 +29,7 @@
       "py" (py3 rest)
       "py2" (py2 rest)
       "py36" (py36 rest)
+      "py37" (py37 rest)
       "pp" (pypi rest)
       "ud" (urbandictionary rest)
       "pb" (pinboard rest)
