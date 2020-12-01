@@ -26,6 +26,12 @@
   ;; "Prod" lein server invokable via 'lein ring server-headless'
   :ring {:handler switchboard.core/human-app :port 8787}
 
+  ;; Drop max heap size about as far as it'll go before Java just refuses to
+  ;; start up, lmao. For what this service does it doesn't need to eat a half
+  ;; gig of RAM or more. (With this at 32m it seems to "only" eat around
+  ;; 300M...)
+  :jvm-opts ["-Xmx32m"]
+
   ;; Personal REPL development setup
   :repl-options {:init (do
     ;; Load & autorun test suite
