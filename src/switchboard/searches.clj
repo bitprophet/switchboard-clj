@@ -68,9 +68,11 @@
     "https://nomanssky.gamepedia.com"
     (str "https://www.google.com/search?q=\"No Man's Sky\" " rest)))
 
-;; TODO: worth doing anything with 'rest'?
+(def -reddit (partial build-url "https://www.reddit.com"))
 (defn reddit [key rest]
-  (str "https://www.reddit.com/" key))
+  (if (nil? rest)
+    (-reddit key)
+    (-reddit key (str "search?q=" rest "&restrict_sr=1"))))
 
 (defn askme [rest]
   (str "https://google.com/search?q=site:ask.metafilter.com " rest))

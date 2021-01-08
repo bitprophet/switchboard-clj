@@ -31,7 +31,8 @@
       (query "nms mark on map") => (redirect "https://www.google.com/search?q=\"No Man's Sky\" mark on map"))
 
 (fact "r/stuff goes to Reddit"
-      (query "r/spacex") => (redirect "https://www.reddit.com/r/spacex"))
+      (query "r/spacex") => (redirect "https://www.reddit.com/r/spacex")
+      (query "r/tea yunnan") => (redirect "https://www.reddit.com/r/tea/search?q=yunnan&restrict_sr=1"))
 
 (fact "askme searches Ask Metafilter"
       (query "askme snow tires") => (goog "site:ask.metafilter.com snow tires"))
