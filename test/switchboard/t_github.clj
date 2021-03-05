@@ -39,8 +39,8 @@
 
 (facts "about basic behavior"
 
-  (fact "bare key just hits homepage"
-        (query "gh") => (gh ""))
+  (fact "bare key just hits notifications"
+        (query "gh") => (gh "/notifications"))
 
   (fact "anything not a project id, etc, is appended to github.com"
         (query "gh somebody/project") => (gh "/somebody/project")))

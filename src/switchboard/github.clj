@@ -88,8 +88,8 @@
 
 (defn github [rest]
   (if (nil? rest)
-    ; Base case: github.com
-    (gh)
+    ; Base case: notifications
+    (gh "notifications")
     ; Try expanding first input to repo full_name, then apply rules like
     ; go-to-landing, go-to-issue-number, make-new-issue, etc
     (let [[proj rest] (string/split rest #" " 2)]
